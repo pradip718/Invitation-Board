@@ -4,6 +4,7 @@ import GuestLists from "./GuestLists";
 export default class Root extends Component {
   state = {
     isFiltered: false,
+    pendingGuests: "",
     guests: [
       {
         name: "Jake",
@@ -62,6 +63,28 @@ export default class Root extends Component {
     });
   };
 
+  //adding user from input field
+
+  changeNameInput = e => {
+    this.setState({ pendingGuests: e.target.value });
+  };
+
+  addUser = e => {
+    e.preventDefault();
+
+    this.setState({
+      guests: [
+        {
+          name: this.state.pendingGuests,
+          isConfirmed: false,
+          isEditing: false
+        },
+        ...this.state.guests
+      ],
+      pendingGuests: ""
+    });
+  };
+
   render() {
     return (
       <div>
@@ -69,8 +92,13 @@ export default class Root extends Component {
           <h1>Invitation Board</h1>
           <hr />
           <h3>Simple application to invite Guest...</h3>
-          <form>
-            <input type="text" placeholder="Invite Guests" />
+          <form onSubmit={this.addUser}>
+            <input
+              type="text"
+              placeholder="Invite Guests"
+              onChange={this.changeNameInput}
+              value={this.state.pendingGuests}
+            />
             <button className="btn btn-primary">Submit</button>
           </form>
         </header>
