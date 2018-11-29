@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GuestLists from "./GuestLists";
+import Counter from "./Counter";
 
 export default class Root extends Component {
   state = {
@@ -19,7 +20,7 @@ export default class Root extends Component {
       {
         name: "John",
         isEditing: false,
-        isConfirmed: false
+        isConfirmed: true
       }
     ]
   };
@@ -45,8 +46,14 @@ export default class Root extends Component {
   toggleEditingAt = index => this.togglePropertyAt("isEditing", index);
 
   getTotalInvited = () => this.state.guests.length;
-  //getTotalAttending = () => {}
-  //  getTotalUnconfirmed = () =>{}
+
+  getAttendingGuest = () => {
+    return this.state.guests.reduce(
+      (total, guest) => (guest.isConfirmed ? total + 1 : total),
+      0
+    );
+  };
+
   toggleFilter = () => this.setState({ isFiltered: !this.state.isFiltered });
 
   changeNameAt = (name, indexToChange) => {
@@ -85,7 +92,20 @@ export default class Root extends Component {
     });
   };
 
+  removeGuestAt = index => {
+    this.setState({
+      guests: [
+        ...this.state.guests.slice(0, index),
+        ...this.state.guests.slice(index + 1, this.state.guests.length)
+      ]
+    });
+  };
+
   render() {
+    const totalGuest = this.getTotalInvited();
+    const numberAttending = this.getAttendingGuest();
+    console.log(numberAttending);
+    const numberUnconfirmed = totalGuest - numberAttending;
     return (
       <div>
         <header>
@@ -116,28 +136,19 @@ export default class Root extends Component {
             </label>
           </div>
 
-          <table className="counter">
-            <tbody>
-              <tr>
-                <td>Attending:</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Unconfirmed:</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <td>Total:</td>
-                <td>{this.getTotalInvited()}</td>
-              </tr>
-            </tbody>
-          </table>
+          <Counter
+            numberAttended={numberAttending}
+            numberUnconfirmed={numberUnconfirmed}
+            totalGuest={totalGuest}
+          />
           <GuestLists
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
             changeNameAt={this.changeNameAt}
             isFiltered={this.state.isFiltered}
+            removeGuestAt={this.removeGuestAt}
+            pendingGuests={this.state.pendingGuests}
           />
         </div>
       </div>

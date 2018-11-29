@@ -22,7 +22,9 @@ const Guest = props => {
       <button onClick={props.handleEditing}>
         {props.isEditing ? "Save" : "Edit"}
       </button>
-      <button>Delete</button>
+      <button onClick={props.handleRemove} className="active">
+        Delete
+      </button>
     </li>
   );
 };
@@ -31,6 +33,7 @@ Guest.propTypes = {
   name: PropTypes.string.isRequired,
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  changeName: PropTypes.func.isRequired
+  changeName: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired
 };
 export default Guest;
