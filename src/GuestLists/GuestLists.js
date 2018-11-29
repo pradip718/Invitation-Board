@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Guest from "./Guest";
+import Guest from "./Guest/Guest"; //"./Guest";
 import PendingGuest from "./PendingGuest";
 
 const GuestList = props => {

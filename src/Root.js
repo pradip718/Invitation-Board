@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import GuestLists from "./GuestLists";
-import Counter from "./Counter";
+import GuestLists from "./GuestLists/GuestLists"; //"./GuestLists";
+import Counter from "./GuestLists/Counter"; //"./GuestLists/Counter";
 import "./App.css";
 
 export default class Root extends Component {
