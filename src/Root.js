@@ -3,6 +3,8 @@ import GuestLists from "./GuestLists";
 
 export default class Root extends Component {
   state = {
+    isFiltered: false,
+    pendingGuests: "",
     guests: [
       {
         name: "Jake",
@@ -11,13 +13,13 @@ export default class Root extends Component {
       },
       {
         name: "alex",
-        isConfirmed: true,
+        isConfirmed: false,
         isEditing: false
       },
       {
         name: "John",
         isEditing: false,
-        isConfirmed: true
+        isConfirmed: false
       }
     ]
   };
@@ -45,6 +47,43 @@ export default class Root extends Component {
   getTotalInvited = () => this.state.guests.length;
   //getTotalAttending = () => {}
   //  getTotalUnconfirmed = () =>{}
+  toggleFilter = () => this.setState({ isFiltered: !this.state.isFiltered });
+
+  changeNameAt = (name, indexToChange) => {
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,
+            name
+          };
+        }
+        return guest;
+      })
+    });
+  };
+
+  //adding user from input field
+
+  changeNameInput = e => {
+    this.setState({ pendingGuests: e.target.value });
+  };
+
+  addUser = e => {
+    e.preventDefault();
+
+    this.setState({
+      guests: [
+        {
+          name: this.state.pendingGuests,
+          isConfirmed: false,
+          isEditing: false
+        },
+        ...this.state.guests
+      ],
+      pendingGuests: ""
+    });
+  };
 
   render() {
     return (
@@ -53,8 +92,13 @@ export default class Root extends Component {
           <h1>Invitation Board</h1>
           <hr />
           <h3>Simple application to invite Guest...</h3>
-          <form>
-            <input type="text" placeholder="Invite Guests" />
+          <form onSubmit={this.addUser}>
+            <input
+              type="text"
+              placeholder="Invite Guests"
+              onChange={this.changeNameInput}
+              value={this.state.pendingGuests}
+            />
             <button className="btn btn-primary">Submit</button>
           </form>
         </header>
@@ -63,7 +107,11 @@ export default class Root extends Component {
           <div>
             <h2>Invitees</h2>
             <label>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter}
+                checked={this.state.isFiltered}
+              />
               Hide those who have not confirmed
             </label>
           </div>
@@ -88,6 +136,8 @@ export default class Root extends Component {
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
+            changeNameAt={this.changeNameAt}
+            isFiltered={this.state.isFiltered}
           />
         </div>
       </div>
