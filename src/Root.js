@@ -3,6 +3,7 @@ import GuestLists from "./GuestLists";
 
 export default class Root extends Component {
   state = {
+    isFiltered: false,
     guests: [
       {
         name: "Jake",
@@ -11,13 +12,13 @@ export default class Root extends Component {
       },
       {
         name: "alex",
-        isConfirmed: true,
+        isConfirmed: false,
         isEditing: false
       },
       {
         name: "John",
         isEditing: false,
-        isConfirmed: true
+        isConfirmed: false
       }
     ]
   };
@@ -45,6 +46,21 @@ export default class Root extends Component {
   getTotalInvited = () => this.state.guests.length;
   //getTotalAttending = () => {}
   //  getTotalUnconfirmed = () =>{}
+  toggleFilter = () => this.setState({ isFiltered: !this.state.isFiltered });
+
+  changeNameAt = (name, indexToChange) => {
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,
+            name
+          };
+        }
+        return guest;
+      })
+    });
+  };
 
   render() {
     return (
@@ -63,7 +79,11 @@ export default class Root extends Component {
           <div>
             <h2>Invitees</h2>
             <label>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter}
+                checked={this.state.isFiltered}
+              />
               Hide those who have not confirmed
             </label>
           </div>
@@ -88,6 +108,8 @@ export default class Root extends Component {
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
+            changeNameAt={this.changeNameAt}
+            isFiltered={this.state.isFiltered}
           />
         </div>
       </div>
