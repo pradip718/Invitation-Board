@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import GuestName from "./GuestName";
+import GuestName from "./GuestName/GuestName"; //"./GuestName/GuestName";
 
 const Guest = props => {
   return (
