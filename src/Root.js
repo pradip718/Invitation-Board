@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GuestLists from "./GuestLists";
 import Counter from "./Counter";
+import "./App.css";
 
 export default class Root extends Component {
   state = {
@@ -104,26 +105,30 @@ export default class Root extends Component {
   render() {
     const totalGuest = this.getTotalInvited();
     const numberAttending = this.getAttendingGuest();
-    console.log(numberAttending);
     const numberUnconfirmed = totalGuest - numberAttending;
     return (
-      <div>
+      <div className="App">
         <header>
-          <h1>Invitation Board</h1>
+          <h1 style={{ marginTop: "20%", "text-shadow": "2px 2px #FF0000" }}>
+            Invitation Board
+          </h1>
           <hr />
-          <h3>Simple application to invite Guest...</h3>
+          <h3 style={{ color: "Black", "text-shadow": "2px 2px 4px #000000" }}>
+            Simple application to invite Players...
+          </h3>
           <form onSubmit={this.addUser}>
             <input
+              style={{ "background-color": "lightblue" }}
               type="text"
-              placeholder="Invite Guests"
+              placeholder="Invite Players"
               onChange={this.changeNameInput}
               value={this.state.pendingGuests}
             />
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-danger">Submit</button>
           </form>
         </header>
 
-        <div style={{ marginLeft: "2%", marginTop: "2%" }} className="main">
+        <div style={{ marginLeft: "2%", marginTop: "15%" }} className="main">
           <div>
             <h2>Invitees</h2>
             <label>
