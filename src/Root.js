@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import GuestLists from "./GuestLists/GuestLists"; //"./GuestLists";
-import Counter from "./GuestLists/Counter"; //"./GuestLists/Counter";
-import "./App.css";
+import React, { Component } from 'react';
+import GuestLists from './GuestLists/GuestLists'; //"./GuestLists";
+import Counter from './GuestLists/Counter'; //"./GuestLists/Counter";
+import './App.css';
 
 export default class Root extends Component {
   state = {
     isFiltered: false,
-    pendingGuests: "",
+    pendingGuests: '',
     guests: [
       {
-        name: "Jake",
+        name: 'Jake',
         isConfirmed: false,
-        isEditing: false
-      },
-      {
-        name: "alex",
-        isConfirmed: false,
-        isEditing: false
-      },
-      {
-        name: "John",
         isEditing: false,
-        isConfirmed: true
-      }
-    ]
+      },
+      {
+        name: 'alex',
+        isConfirmed: false,
+        isEditing: false,
+      },
+      {
+        name: 'John',
+        isEditing: false,
+        isConfirmed: true,
+      },
+    ],
   };
 
   togglePropertyAt = (property, indexToChange) => {
@@ -32,27 +32,24 @@ export default class Root extends Component {
         if (index === indexToChange) {
           return {
             ...guest,
-            [property]: !guest[property]
+            [property]: !guest[property],
           };
         }
         return guest;
-      })
+      }),
     });
   };
 
   //For checkbox
-  toggleConfirmationAt = index => this.togglePropertyAt("isConfirmed", index);
+  toggleConfirmationAt = index => this.togglePropertyAt('isConfirmed', index);
 
   //For Editing
-  toggleEditingAt = index => this.togglePropertyAt("isEditing", index);
+  toggleEditingAt = index => this.togglePropertyAt('isEditing', index);
 
   getTotalInvited = () => this.state.guests.length;
 
   getAttendingGuest = () => {
-    return this.state.guests.reduce(
-      (total, guest) => (guest.isConfirmed ? total + 1 : total),
-      0
-    );
+    return this.state.guests.reduce((total, guest) => (guest.isConfirmed ? total + 1 : total), 0);
   };
 
   toggleFilter = () => this.setState({ isFiltered: !this.state.isFiltered });
@@ -63,11 +60,11 @@ export default class Root extends Component {
         if (index === indexToChange) {
           return {
             ...guest,
-            name
+            name,
           };
         }
         return guest;
-      })
+      }),
     });
   };
 
@@ -85,11 +82,11 @@ export default class Root extends Component {
         {
           name: this.state.pendingGuests,
           isConfirmed: false,
-          isEditing: false
+          isEditing: false,
         },
-        ...this.state.guests
+        ...this.state.guests,
       ],
-      pendingGuests: ""
+      pendingGuests: '',
     });
   };
 
@@ -97,8 +94,8 @@ export default class Root extends Component {
     this.setState({
       guests: [
         ...this.state.guests.slice(0, index),
-        ...this.state.guests.slice(index + 1, this.state.guests.length)
-      ]
+        ...this.state.guests.slice(index + 1, this.state.guests.length),
+      ],
     });
   };
 
@@ -109,16 +106,14 @@ export default class Root extends Component {
     return (
       <div className="App">
         <header>
-          <h1 style={{ marginTop: "20%", "text-shadow": "2px 2px #FF0000" }}>
-            Invitation Board
-          </h1>
+          <h1 style={{ marginTop: '20%', textShadow: '2px 2px #FF0000' }}>Invitation Board</h1>
           <hr />
-          <h3 style={{ color: "Black", "text-shadow": "2px 2px 4px #000000" }}>
+          <h3 style={{ color: 'Black', textShadow: '2px 2px 4px #000000' }}>
             Simple application to invite Players...
           </h3>
           <form onSubmit={this.addUser}>
             <input
-              style={{ "background-color": "lightblue" }}
+              style={{ backgroundColor: 'lightblue' }}
               type="text"
               placeholder="Invite Players"
               onChange={this.changeNameInput}
@@ -128,15 +123,11 @@ export default class Root extends Component {
           </form>
         </header>
 
-        <div style={{ marginLeft: "2%", marginTop: "15%" }} className="main">
+        <div style={{ marginLeft: '2%', marginTop: '15%' }} className="main">
           <div>
             <h2>Invitees</h2>
             <label>
-              <input
-                type="checkbox"
-                onChange={this.toggleFilter}
-                checked={this.state.isFiltered}
-              />
+              <input type="checkbox" onChange={this.toggleFilter} checked={this.state.isFiltered} />
               Hide those who have not confirmed
             </label>
           </div>

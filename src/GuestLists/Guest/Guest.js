@@ -1,27 +1,18 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import GuestName from "./GuestName/GuestName"; //"./GuestName/GuestName";
+import React from 'react';
+import PropTypes from 'prop-types';
+import GuestName from './GuestName/GuestName'; //"./GuestName/GuestName";
 
 const Guest = props => {
   return (
     <li className="responded">
-      <GuestName
-        isEditing={props.isEditing}
-        handleNameEdits={e => props.setName(e.target.value)}
-      >
+      <GuestName isEditing={props.isEditing} handleNameEdits={e => props.setName(e.target.value)}>
         {props.name}
       </GuestName>
       <label>
-        <input
-          type="checkbox"
-          checked={props.isConfirmed}
-          onChange={props.handleConfirmation}
-        />
+        <input type="checkbox" checked={props.isConfirmed} onChange={props.handleConfirmation} />
         Confirmed
       </label>
-      <button onClick={props.handleEditing}>
-        {props.isEditing ? "Save" : "Edit"}
-      </button>
+      <button onClick={props.handleEditing}>{props.isEditing ? 'Save' : 'Edit'}</button>
       <button onClick={props.handleRemove} className="active">
         Delete
       </button>
@@ -33,7 +24,7 @@ Guest.propTypes = {
   name: PropTypes.string.isRequired,
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  changeName: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired
+  changeName: PropTypes.func,
+  handleRemove: PropTypes.func.isRequired,
 };
 export default Guest;

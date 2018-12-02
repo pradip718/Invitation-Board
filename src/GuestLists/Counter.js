@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Counter = props => (
   <table className="counter">
@@ -22,7 +22,7 @@ const Counter = props => (
 Counter.propTypes = {
   numberAttended: PropTypes.number,
   numberUnconfirmed: PropTypes.number,
-  totalGuest: PropTypes.number
+  totalGuest: PropTypes.number,
 };
 
 export default Counter;
